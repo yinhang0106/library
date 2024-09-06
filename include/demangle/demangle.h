@@ -2,17 +2,18 @@
 
 #include <cxxabi.h>
 #include <string>
+#include <memory>
 
-namespace details {
+namespace demangle_details {
 
     std::string _demangle(char const *name) {
         int status;
-        char *realname = abi::__cxa_demangle(name, nullptr, nullptr, &status);
-        std::string result = realname ? realname : name;
-        free(realname);
-        return result;
+        auto realname = std::unique_ptr<char>(abi::__cxa_demangle(name, nullptr, nullptr, &status));
+        if (status != 0) {
+            return name;
+        }
+        return realname.get();
     }
-
 
     template <typename T>
     std::string demangle() {
@@ -34,4 +35,4 @@ namespace details {
 
 }
 
-using details::demangle;
+using demangle_details::demangle;
