@@ -5,3 +5,4 @@ foreach (TEST_SOURCE ${TESTS_SOURCES})
 endforeach ()
 
 target_link_libraries(test_print PRIVATE print)
+target_link_libraries(test_demangle PRIVATE demangle)
