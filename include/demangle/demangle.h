@@ -2,7 +2,7 @@
 
 #if defined(__GNUC__) || defined(__clang__)
 #include <cxxabi.h>
-#else
+#elif defined(_MSC_VER)
 #include <Windows.h>
 #include <DbgHelp.h>
 #pragma comment(lib, "Dbghelp.lib")
