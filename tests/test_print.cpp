@@ -1,15 +1,16 @@
-#include <print.h>
-
-#include <format>
-#include <vector>
-#include <unordered_map>
 #include <array>
+#include <format>
+#include <print.h>
+#include <unordered_map>
+#include <vector>
 
 int main() {
     std::ostream os{std::cout.rdbuf()};
-    std::map<std::string, std::variant<int, double>> m{{"hello", 2.1}, {"world", 4}, {"ok", 0}};
+    std::map<std::string, std::variant<int, double> > m{
+        {"hello", 2.1}, {"world", 4}, {"ok", 0}
+    };
     print(m);
-    std::vector<std::optional<int>> vec{1, 2, std::nullopt, 4, 5};
+    std::vector<std::optional<int> > vec{1, 2, std::nullopt, 4, 5};
     print(vec);
     std::string s{"hello"};
     print(s);
