@@ -4,6 +4,8 @@
 #include <sstream>
 #include <iomanip>
 #include <map>
+#include <optional>
+#include <variant>
 
 
 namespace printer_details {
@@ -12,7 +14,7 @@ template <typename T, typename = void>
 struct is_tuple : std::false_type {};
 
 template <typename T>
-struct is_tuple<T, std::void_t<decltype(std::tuple_size<T>::value)>> : std::true_type {};
+struct is_tuple<T, std::void_t<decltype(std::tuple_size_v<T>)>> : std::true_type {};
 
 template <typename T>
 struct is_array : std::false_type {};
@@ -199,44 +201,44 @@ struct _printer<std::monostate> {
 
 template <typename T0, typename ...Ts>
 void print(T0 const &t0, Ts const &...ts) {
-    [] (std::ostream &os, T0 const& t0, Ts const&... ts) {
-        _printer<std::remove_cvref_t<T0>>::print(os, t0);
-        ((os << " ", _printer<std::remove_cvref_t<Ts>>::print(os, ts)), ...);
-        os << "\n";
+    [] (std::ostream &_os, T0 const& _t0, Ts const&... _ts) {
+        _printer<std::remove_cvref_t<T0>>::print(_os, _t0);
+        ((_os << " ", _printer<std::remove_cvref_t<Ts>>::print(_os, _ts)), ...);
+        _os << "\n";
     } (std::cout, t0, ts...);
 }
 
 template <typename T0, typename ...Ts>
 void printnl(T0 const &t0, Ts const&... ts) {
-    [] (std::ostream &os, T0 const& t0, Ts const&... ts) {
-        _printer<std::remove_cvref_t<T0>>::print(os, t0);
-        ((os << " ", _printer<std::remove_cvref_t<Ts>>::print(os, ts)), ...);
+    [] (std::ostream &_os, T0 const& _t0, Ts const&... _ts) {
+        _printer<std::remove_cvref_t<T0>>::print(_os, _t0);
+        ((_os << " ", _printer<std::remove_cvref_t<Ts>>::print(_os, _ts)), ...);
     } (std::cout, t0, ts...);
 }
 
 template <typename T0, typename ...Ts>
 void eprint(T0 const &t0, Ts const &...ts) {
-    [] (std::ostream &os, T0 const& t0, Ts const&... ts) {
-        _printer<std::remove_cvref_t<T0>>::print(os, t0);
-        ((os << " ", _printer<std::remove_cvref_t<Ts>>::print(os, ts)), ...);
-        os << "\n";
+    [] (std::ostream &_os, T0 const& _t0, Ts const&... _ts) {
+        _printer<std::remove_cvref_t<T0>>::print(_os, _t0);
+        ((_os << " ", _printer<std::remove_cvref_t<Ts>>::print(_os, _ts)), ...);
+        _os << "\n";
     } (std::cerr, t0, ts...);
 }
 
 template <typename T0, typename ...Ts>
 void eprintnl(T0 const &t0, Ts const&... ts) {
-    [] (std::ostream &os, T0 const& t0, Ts const&... ts) {
-        _printer<std::remove_cvref_t<T0>>::print(os, t0);
-        ((os << " ", _printer<std::remove_cvref_t<Ts>>::print(os, ts)), ...);
+    [] (std::ostream &_os, T0 const& _t0, Ts const&... _ts) {
+        _printer<std::remove_cvref_t<T0>>::print(_os, _t0);
+        ((_os << " ", _printer<std::remove_cvref_t<Ts>>::print(_os, _ts)), ...);
     } (std::cerr, t0, ts...);
 }
 
 template <typename T0, typename ...Ts>
 std::string to_string(T0 const &t0, Ts const&... ts) {
     std::ostringstream oss;
-    [] (std::ostringstream &oss, T0 const& t0, Ts const&... ts) {
-        _printer<std::remove_cvref_t<T0>>::print(oss, t0);
-        ((oss << " ", _printer<std::remove_cvref_t<Ts>>::print(oss, ts)), ...);
+    [] (std::ostringstream &_oss, T0 const& _t0, Ts const&... _ts) {
+        _printer<std::remove_cvref_t<T0>>::print(_oss, _t0);
+        ((_oss << " ", _printer<std::remove_cvref_t<Ts>>::print(_oss, _ts)), ...);
     } (oss, t0, ts...);
     return oss.str();
 }

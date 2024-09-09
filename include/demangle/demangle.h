@@ -33,6 +33,6 @@ namespace demangle_details {
         return name;
     }
 
-}
+}   // namespace demangle_details
 
 using demangle_details::demangle;

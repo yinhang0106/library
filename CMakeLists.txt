@@ -7,5 +7,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_subdirectory(include/print)
 add_subdirectory(include/demangle)
+add_subdirectory(include/coroutines)
 
 add_subdirectory(tests)

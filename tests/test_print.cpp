@@ -1,6 +1,8 @@
 #include <print.h>
 
 #include <format>
+#include <vector>
+#include <unordered_map>
 
 int main() {
     std::ostream os{std::cout.rdbuf()};
