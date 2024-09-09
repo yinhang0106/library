@@ -3,6 +3,7 @@
 #include <format>
 #include <vector>
 #include <unordered_map>
+#include <array>
 
 int main() {
     std::ostream os{std::cout.rdbuf()};
